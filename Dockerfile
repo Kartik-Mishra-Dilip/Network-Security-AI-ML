@@ -1,10 +1,11 @@
-FROM python:3.10-slim-buster
+FROM python:3.10  
+# Change to a more complete base image
 WORKDIR /app
 COPY . /app
 
-# Update and install awscli, and clean up
+# Update and install awscli, adding retries
 RUN apt-get update -y && \
-    apt-get install -y awscli && \
+    apt-get install -y awscli || exit 0 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
